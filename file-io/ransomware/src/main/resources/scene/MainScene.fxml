@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="287.0" prefWidth="567.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.malware.controller.MainSceneController">
+   <children>
+      <Label alignment="CENTER" layoutX="10.0" layoutY="25.0" prefHeight="74.0" prefWidth="547.0" text="Your files have been encrypted. You need to send us 2 bitcoins to the following account if you wish to decrypt the files." textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtPassword" alignment="CENTER" layoutX="180.0" layoutY="155.0" promptText="Enter Password">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <Button fx:id="btnDecrypt" defaultButton="true" layoutX="236.0" layoutY="204.0" mnemonicParsing="false" onAction="#btnDecryptOnAction" text="DECRYPT">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Label layoutX="79.0" layoutY="253.0" text="If you inform this to the Police, it will be end of you!">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="20.0" layoutY="124.0" text="Enter the password that we have sent you to decrypt your files" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
