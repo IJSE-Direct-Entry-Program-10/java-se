@@ -20,7 +20,7 @@ public class WriteFile {
         String something = "Hello, this is a new file!";
         byte[] bytes = something.getBytes();
 
-        fos.write(bytes);
+        fos.write(bytes,0, 10);
 
         fos.close();
     }
