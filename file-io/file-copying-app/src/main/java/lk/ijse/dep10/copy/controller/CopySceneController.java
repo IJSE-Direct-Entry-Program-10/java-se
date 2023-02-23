@@ -1,15 +1,13 @@
 package lk.ijse.dep10.copy.controller;
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
-import java.io.File;
+import java.io.*;
+import java.util.Optional;
 
 public class CopySceneController {
 
@@ -31,7 +29,34 @@ public class CopySceneController {
     }
 
     public void btnCopyOnAction(ActionEvent event) {
+        File targetFile = new File(targetFolder, sourceFile.getName());
+        if(targetFile.exists()){
+            Optional<ButtonType> optResult = new Alert(Alert.AlertType.CONFIRMATION,
+                    "File already exists, are you sure to replace the file?",
+                    ButtonType.YES, ButtonType.NO).showAndWait();
+            if (optResult.isEmpty() || optResult.get() == ButtonType.NO) return;
+        }
         btnCopy.getScene().getWindow().setHeight(325);
+
+        try {
+            FileInputStream fis = new FileInputStream(sourceFile);
+            FileOutputStream fos = new FileOutputStream(targetFile);
+
+            while (true) {
+                byte[] buffer = new byte[1024 * 10];    // 10Kb
+                int read = fis.read(buffer);
+                if (read == -1) break;
+                fos.write(buffer, 0, read);
+            }
+
+            fis.close();
+            fos.close();
+
+            System.out.println("Copied");
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong, try again!").show();
+        }
     }
 
     public void btnResetOnAction(ActionEvent event) {
