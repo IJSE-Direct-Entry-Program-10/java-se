@@ -1,5 +1,7 @@
 package lk.ijse.dep10.copy.controller;
 
+import javafx.application.Platform;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -23,9 +25,11 @@ public class CopySceneController {
 
     private File sourceFile;
     private File targetFolder;
+    private SimpleDoubleProperty progress = new SimpleDoubleProperty();
 
     public void initialize() {
         btnCopy.setDisable(true);
+        prgCopy.progressProperty().bind(progress);
     }
 
     public void btnCopyOnAction(ActionEvent event) {
@@ -36,31 +40,38 @@ public class CopySceneController {
                     ButtonType.YES, ButtonType.NO).showAndWait();
             if (optResult.isEmpty() || optResult.get() == ButtonType.NO) return;
         }
-        btnCopy.getScene().getWindow().setHeight(325);
+        //btnCopy.getScene().getWindow().setHeight(325);
 
-        try {
-            FileInputStream fis = new FileInputStream(sourceFile);
-            FileOutputStream fos = new FileOutputStream(targetFile);
+        Platform.runLater(()->{
+            try {
+                FileInputStream fis = new FileInputStream(sourceFile);
+                FileOutputStream fos = new FileOutputStream(targetFile);
 
-            while (true) {
-                byte[] buffer = new byte[1024 * 10];    // 10Kb
-                int read = fis.read(buffer);
-                if (read == -1) break;
-                fos.write(buffer, 0, read);
+                double write = 0.0;
+
+                while (true) {
+                    byte[] buffer = new byte[1024 * 10];    // 10Kb
+                    int read = fis.read(buffer);
+                    if (read == -1) break;
+                    fos.write(buffer, 0, read);
+                    write += read;
+                    double pr = write / sourceFile.length();
+                    System.out.println(pr);
+                    progress.set(pr);
+                }
+
+                progress.set(1);
+                fis.close();
+                fos.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Something went wrong, try again!").show();
             }
-
-            fis.close();
-            fos.close();
-
-            System.out.println("Copied");
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Something went wrong, try again!").show();
-        }
+        });
     }
 
     public void btnResetOnAction(ActionEvent event) {
-        btnReset.getScene().getWindow().setHeight(250);
+        //btnReset.getScene().getWindow().setHeight(250);
         txtSource.clear();
         txtTarget.clear();
         sourceFile = null;
