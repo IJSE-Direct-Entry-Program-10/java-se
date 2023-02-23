@@ -1,9 +1,7 @@
 package lk.ijse.dep10.copy.controller;
 
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
