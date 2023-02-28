@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="750.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.serialization.controller.TransientViewController">
+   <children>
+      <Button fx:id="btnNewEmployee" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnNewEmployeeOnAction" text="+ NEW EMPLOYEE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <VBox layoutX="15.0" layoutY="59.0" spacing="5.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="60.0">
+         <children>
+            <Label text="EMPLOYEE DETAILS">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font name="Ubuntu Bold" size="13.0" />
+               </font>
+            </Label>
+            <HBox spacing="10.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" prefHeight="30.0" prefWidth="109.0" text="ID : ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtId" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="10.0" spacing="10.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" prefHeight="30.0" prefWidth="109.0" text="NAME :">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtEmployeeName" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="50.0" spacing="10.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" prefHeight="30.0" prefWidth="109.0" text="CONTACTS :">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtEmployeeContact" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="btnAddEmployeeContact" defaultButton="true" maxHeight="1.7976931348623157E308" minWidth="95.0" mnemonicParsing="false" onAction="#btnAddEmployeeContactOnAction" prefHeight="30.0" prefWidth="90.0" text="ADD">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="90.0" spacing="10.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" prefHeight="30.0" prefWidth="109.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="lstEmployeeContacts" maxHeight="82.0" maxWidth="1.7976931348623157E308" minHeight="70.0" onKeyReleased="#lstEmployeeContactsOnKeyReleased" prefHeight="100.0" prefWidth="329.0" style="-fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnRemoveEmployeeContact" minWidth="95.0" mnemonicParsing="false" onAction="#btnRemoveEmployeeContactOnAction" text="REMOVE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox spacing="10.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" prefHeight="30.0" prefWidth="109.0" text="STATUS :">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="rdoSingle" maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="SINGLE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tglStatus" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rdoMarried" layoutX="129.0" layoutY="10.0" maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="MARRIED" toggleGroup="$tglStatus">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <Label text="SPOUSE DETAILS">
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Ubuntu Bold" size="13.0" />
+               </font>
+            </Label>
+            <VBox fx:id="vboxSpouse" spacing="5.0">
+               <children>
+                  <HBox spacing="10.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" prefHeight="30.0" prefWidth="109.0" text="NAME :">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtSpouseName" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox spacing="10.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" prefHeight="30.0" prefWidth="109.0" text="CONTACTS :">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtSpouseContact" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="btnAddSpouseContact" defaultButton="true" maxHeight="1.7976931348623157E308" minWidth="95.0" mnemonicParsing="false" onAction="#btnAddSpouseContactOnAction" prefHeight="30.0" prefWidth="90.0" text="ADD">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox spacing="10.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" prefHeight="30.0" prefWidth="109.0">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="lstSpouseContacts" maxHeight="82.0" maxWidth="1.7976931348623157E308" minHeight="70.0" onKeyReleased="#lstSpouseContactsOnKeyReleased" prefHeight="100.0" prefWidth="329.0" style="-fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnRemoveSpouseContact" minWidth="95.0" mnemonicParsing="false" onAction="#btnRemoveSpouseContactOnAction" text="REMOVE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <Button fx:id="btnSave" defaultButton="true" layoutX="133.0" layoutY="502.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="30.0" prefWidth="95.0" text="SAVE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDelete" layoutX="237.0" layoutY="502.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="30.0" prefWidth="95.0" text="DELETE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tblEmployees" layoutX="14.0" layoutY="604.0" onKeyReleased="#tblEmployeesOnKeyReleased" prefHeight="200.0" prefWidth="560.0" style="-fx-font-size: 14px;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="550.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="ID" />
+          <TableColumn prefWidth="213.0" text="NAME" />
+            <TableColumn prefWidth="213.0" text="SPOUSE NAME" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
