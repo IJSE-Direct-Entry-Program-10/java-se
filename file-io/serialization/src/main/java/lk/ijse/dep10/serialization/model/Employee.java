@@ -1,5 +1,7 @@
 package lk.ijse.dep10.serialization.model;
 
+import javafx.scene.control.Button;
+
 import java.io.Serializable;
 
 public class Employee implements Serializable {
@@ -7,15 +9,17 @@ public class Employee implements Serializable {
     private PersonInfo employeeInfo;
     private Status status;
     private PersonInfo spouseInfo;
+    private transient Button btnRemove;
 
     public Employee() {
     }
 
-    public Employee(String id, PersonInfo employeeInfo, Status status, PersonInfo spouseInfo) {
+    public Employee(String id, PersonInfo employeeInfo, Status status, PersonInfo spouseInfo, Button btnRemove) {
         this.id = id;
         this.employeeInfo = employeeInfo;
         this.status = status;
         this.spouseInfo = spouseInfo;
+        this.btnRemove = btnRemove;
     }
 
     public String getEmployeeName(){
@@ -56,5 +60,13 @@ public class Employee implements Serializable {
 
     public void setSpouseInfo(PersonInfo spouseInfo) {
         this.spouseInfo = spouseInfo;
+    }
+
+    public Button getBtnRemove() {
+        return btnRemove;
+    }
+
+    public void setBtnRemove(Button btnRemove) {
+        this.btnRemove = btnRemove;
     }
 }

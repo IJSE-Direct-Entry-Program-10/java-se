@@ -1,12 +1,21 @@
 package lk.ijse.dep10.serialization.controller;
 
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import lk.ijse.dep10.serialization.model.Employee;
+import lk.ijse.dep10.serialization.model.PersonInfo;
+import lk.ijse.dep10.serialization.model.Status;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 public class TransientViewController {
 
@@ -30,10 +39,14 @@ public class TransientViewController {
     public TextField txtSpouseName;
     public VBox vboxSpouse;
 
+    private File dbFile = new File("employee-db.dep10");
+    private ArrayList<Employee> employeeList = new ArrayList<>();
+
     public void initialize(){
         tblEmployees.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         tblEmployees.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("employeeName"));
         tblEmployees.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("spouseName"));
+        tblEmployees.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("btnRemove"));
 
         lstEmployeeContacts.getSelectionModel().selectedItemProperty().addListener((ov, old, current) -> {
             btnRemoveEmployeeContact.setDisable(current == null);
@@ -113,6 +126,73 @@ public class TransientViewController {
 
     public void btnSaveOnAction(ActionEvent event) {
 
+        /* Let's validate */
+        if (!validateData()) return;
+
+        /* Let's collect data */
+        String id = txtId.getText();
+        String name = txtEmployeeName.getText();
+        ArrayList<String> employeeContactList = new ArrayList<>(lstEmployeeContacts.getItems());
+        PersonInfo employeeInfo = new PersonInfo(name, employeeContactList);
+        Status status = tglStatus.getSelectedToggle() == rdoMarried ? Status.MARRIED : Status.SINGLE;
+        PersonInfo spouseInfo = null;
+        if (status == Status.MARRIED){
+            String spouseName = txtSpouseName.getText();
+            ArrayList<String> spouseContactList = new ArrayList<>(lstSpouseContacts.getItems());
+            spouseInfo = new PersonInfo(spouseName, spouseContactList);
+        }
+        Button btnRemove = new Button("DELETE");
+
+        /* Let's create an employee instance and add it to the employeeList */
+        Employee employee = new Employee(id, employeeInfo, status, spouseInfo, btnRemove);
+        employeeList.add(employee);
+
+        btnRemove.setOnAction(actionEvent -> tblEmployees.getItems().remove(employee));
+
+        /* Let's save the employeeList */
+        try {
+            FileOutputStream fos = new FileOutputStream(dbFile);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(employeeList);
+            oos.close();
+            tblEmployees.getItems().add(employee);
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to save the employee").show();
+            employeeList.remove(employee);
+        }
+    }
+
+    private boolean validateData(){
+        for (TextField txt : new TextField[]{txtId, txtEmployeeName}) {
+            if (txt.getText().isBlank()){
+                txt.requestFocus();
+                txt.selectAll();
+                return false;
+            }
+        }
+        if (lstEmployeeContacts.getItems().isEmpty()){
+            txtEmployeeContact.requestFocus();
+            txtEmployeeContact.selectAll();
+            return false;
+        }
+        if (tglStatus.getSelectedToggle() == null) {
+            rdoSingle.requestFocus();
+            return false;
+        }
+        if (tglStatus.getSelectedToggle() == rdoMarried){
+            if (txtSpouseName.getText().isBlank()){
+                txtSpouseName.requestFocus();
+                txtSpouseName.selectAll();
+                return false;
+            }
+            if (lstSpouseContacts.getItems().isEmpty()){
+                txtSpouseContact.selectAll();
+                txtSpouseContact.requestFocus();
+                return false;
+            }
+        }
+        return true;
     }
 
     public void btnDeleteOnAction(ActionEvent event) {

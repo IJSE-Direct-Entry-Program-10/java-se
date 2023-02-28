@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="750.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.serialization.controller.TransientViewController">
    <children>
       <Button fx:id="btnNewEmployee" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnNewEmployeeOnAction" text="+ NEW EMPLOYEE">
@@ -191,8 +190,9 @@
       <TableView fx:id="tblEmployees" layoutX="14.0" layoutY="604.0" onKeyReleased="#tblEmployeesOnKeyReleased" prefHeight="200.0" prefWidth="560.0" style="-fx-font-size: 14px;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="550.0">
         <columns>
           <TableColumn prefWidth="75.0" text="ID" />
-          <TableColumn prefWidth="213.0" text="NAME" />
-            <TableColumn prefWidth="213.0" text="SPOUSE NAME" />
+          <TableColumn prefWidth="153.0" text="NAME" />
+            <TableColumn prefWidth="207.0" text="SPOUSE NAME" />
+            <TableColumn prefWidth="104.0" text="DELETE" />
         </columns>
       </TableView>
    </children>
