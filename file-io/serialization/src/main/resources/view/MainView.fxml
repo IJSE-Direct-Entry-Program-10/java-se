@@ -6,22 +6,31 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="172.0" prefWidth="359.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.serialization.controller.MainViewController">
+<AnchorPane prefHeight="205.0" prefWidth="359.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.serialization.controller.MainViewController">
    <children>
       <Label alignment="CENTER" layoutX="122.0" layoutY="46.0" text="Java Serialization in Action" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="Ubuntu Bold" size="20.0" />
          </font>
       </Label>
-      <VBox alignment="CENTER" layoutX="103.0" layoutY="79.0" spacing="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+      <VBox alignment="CENTER" layoutX="103.0" layoutY="79.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="60.0">
          <children>
-            <Button fx:id="btnHello" minWidth="160.0" mnemonicParsing="false" onAction="#btnHelloOnAction" text="Hello Serialization">
+            <Button fx:id="btnHello" maxWidth="1.7976931348623157E308" minWidth="240.0" mnemonicParsing="false" onAction="#btnHelloOnAction" text="Hello Serialization">
                <font>
                   <Font name="Ubuntu" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btnManageStudents" layoutX="10.0" layoutY="10.0" minWidth="160.0" mnemonicParsing="false" onAction="#btnManageStudentsOnAction" text="Manage Students">
+            <Button fx:id="btnManageStudents" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" minWidth="240.0" mnemonicParsing="false" onAction="#btnManageStudentsOnAction" text="Manage Students">
+               <font>
+                  <Font name="Ubuntu" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnInheritance" layoutX="95.0" layoutY="49.0" maxWidth="1.7976931348623157E308" minWidth="240.0" mnemonicParsing="false" onAction="#btnInheritanceOnAction" text="Serialization with Inheritance">
+               <font>
+                  <Font name="Ubuntu" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnInheritance2" layoutX="55.0" layoutY="88.0" maxWidth="1.7976931348623157E308" minWidth="240.0" mnemonicParsing="false" onAction="#btnInheritance2OnAction" text="Serialization with Inheritance - II">
                <font>
                   <Font name="Ubuntu" size="16.0" />
                </font>

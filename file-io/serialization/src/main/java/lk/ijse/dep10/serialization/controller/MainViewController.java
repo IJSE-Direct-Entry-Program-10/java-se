@@ -12,9 +12,13 @@ public class MainViewController {
 
     public Button btnHello;
     public Button btnManageStudents;
+    public Button btnInheritance;
+    public Button btnInheritance2;
 
     private Stage stgHello;
     private Stage stgManageStudent;
+    private Stage stgInheritance;
+    private Stage stgInheritance2;
 
     public void btnHelloOnAction(ActionEvent event) throws IOException {
         if (stgHello != null) return;
@@ -36,4 +40,23 @@ public class MainViewController {
         stgManageStudent.setOnCloseRequest(e -> stgManageStudent = null);
     }
 
+    public void btnInheritanceOnAction(ActionEvent actionEvent) throws IOException {
+        if (stgInheritance != null) return;
+        stgInheritance = new Stage();
+        stgInheritance.setTitle("Serialization with Inheritance");
+        stgInheritance.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/InheritanceView.fxml"))));
+        stgInheritance.show();
+        stgInheritance.centerOnScreen();
+        stgInheritance.setOnCloseRequest(e -> stgInheritance = null);
+    }
+
+    public void btnInheritance2OnAction(ActionEvent actionEvent) throws IOException {
+        if (stgInheritance2 != null) return;
+        stgInheritance2 = new Stage();
+        stgInheritance2.setTitle("Serialization with Inheritance - II");
+        stgInheritance2.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/InheritanceView2.fxml"))));
+        stgInheritance2.show();
+        stgInheritance2.centerOnScreen();
+        stgInheritance2.setOnCloseRequest(e -> stgInheritance2 = null);
+    }
 }

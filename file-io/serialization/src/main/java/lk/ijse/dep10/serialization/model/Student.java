@@ -8,9 +8,11 @@ public class Student implements Serializable {
     private String address;
 
     public Student() {
+        //System.out.println("Student()");
     }
 
     public Student(String id, String name, String address) {
+        System.out.println("Student(id, name, address)");
         this.id = id;
         this.name = name;
         this.address = address;

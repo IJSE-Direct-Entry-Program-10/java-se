@@ -8,6 +8,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.FileChooser;
 
+import javax.swing.*;
 import java.io.*;
 
 public class EditorSceneController {
