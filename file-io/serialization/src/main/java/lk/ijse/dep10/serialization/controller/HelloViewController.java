@@ -34,9 +34,9 @@ public class HelloViewController {
             FileInputStream fis = new FileInputStream(studentFile);
             ObjectInputStream ois = new ObjectInputStream(fis);
             Student student = (Student) ois.readObject();
-            txtId.setText(student.id);
-            txtName.setText(student.name);
-            txtAddress.setText(student.address);
+            txtId.setText(student.getId());
+            txtName.setText(student.getName());
+            txtAddress.setText(student.getAddress());
             ois.close();
         } catch (Exception e) {
             e.printStackTrace();

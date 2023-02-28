@@ -30,7 +30,7 @@ public class MainViewController {
         if (stgManageStudent != null) return;
         stgManageStudent = new Stage();
         stgManageStudent.setTitle("Manage Students");
-        stgManageStudent.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/HelloView.fxml"))));
+        stgManageStudent.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/StudentView.fxml"))));
         stgManageStudent.show();
         stgManageStudent.centerOnScreen();
         stgManageStudent.setOnCloseRequest(e -> stgManageStudent = null);
