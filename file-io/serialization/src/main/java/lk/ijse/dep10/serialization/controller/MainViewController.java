@@ -15,12 +15,14 @@ public class MainViewController {
     public Button btnInheritance;
     public Button btnInheritance2;
     public Button btnTransient;
+    public Button btnSerialVersionUID;
 
     private Stage stgHello;
     private Stage stgManageStudent;
     private Stage stgInheritance;
     private Stage stgInheritance2;
     private Stage stgTransient;
+    private Stage stgSerialVersionUID;
 
     public void btnHelloOnAction(ActionEvent event) throws IOException {
         if (stgHello != null) return;
@@ -71,5 +73,15 @@ public class MainViewController {
         stgTransient.show();
         stgTransient.centerOnScreen();
         stgTransient.setOnCloseRequest(e -> stgTransient = null);
+    }
+
+    public void btnSerialVersionUIDOnAction(ActionEvent actionEvent) throws IOException {
+        if (stgSerialVersionUID != null) return;
+        stgSerialVersionUID = new Stage();
+        stgSerialVersionUID.setTitle("Serial Version UID");
+        stgSerialVersionUID.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/SerialVersionUIDView.fxml"))));
+        stgSerialVersionUID.show();
+        stgSerialVersionUID.centerOnScreen();
+        stgSerialVersionUID.setOnCloseRequest(e -> stgSerialVersionUID = null);
     }
 }
