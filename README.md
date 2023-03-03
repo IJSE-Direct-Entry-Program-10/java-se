@@ -6,6 +6,7 @@ A collection of projects to explore the most important areas of the Java SE libr
 
 - [BigDeciaml](/big-decimal/)
 - [File I/O](/file-io/)
+- [Network I/O](/network-io/)
 
 ### License
 Copyright 2023 DEP. All Rights Reserved.
