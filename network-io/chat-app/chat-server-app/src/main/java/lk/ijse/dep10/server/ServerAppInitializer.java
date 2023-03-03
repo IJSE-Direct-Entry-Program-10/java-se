@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class ServerAppInitializer {
 
-    private static volatile ArrayList<User> userList = new ArrayList<>();
+    private static final ArrayList<User> userList = new ArrayList<>();
     private static volatile String chatHistory = "";
 
     public static void main(String[] args) throws IOException {
@@ -36,10 +36,9 @@ public class ServerAppInitializer {
                     while (true) {
                         Dep10Message msg = (Dep10Message) ois.readObject();
                         if (msg.getHeader() == Dep10Headers.MSG) {
-                            chatHistory += String.format("%s: %s \n",
-                                    user.getRemoteIpAddress(), msg.getBody());
+                            chatHistory += String.format("%s: %s \n", user.getRemoteIpAddress(), msg.getBody());
                             broadcastChatHistory();
-                        }else if (msg.getHeader() == Dep10Headers.EXIT){
+                        } else if (msg.getHeader() == Dep10Headers.EXIT) {
                             userList.remove(user);
                             if (user.getLocalSocket().isConnected()) user.getLocalSocket().close();
                             broadcastLoggedUsers();
@@ -47,13 +46,11 @@ public class ServerAppInitializer {
                         }
                     }
                 } catch (Exception e) {
-                    if (e instanceof EOFException){
-                        if (userList.contains(user)){
-                            userList.remove(user);
-                            broadcastLoggedUsers();
-                        }
-                        return;
+                    if (userList.contains(user)) {
+                        userList.remove(user);
+                        broadcastLoggedUsers();
                     }
+                    if (e instanceof EOFException || localSocket.isClosed()) return;
                     e.printStackTrace();
                 }
             }).start();
@@ -62,7 +59,7 @@ public class ServerAppInitializer {
 
     private static void broadcastChatHistory() {
         for (User user : userList) {
-            new Thread(()->{
+            new Thread(() -> {
                 try {
                     ObjectOutputStream oos = user.getObjectOutputStream();
                     oos.writeObject(new Dep10Message(Dep10Headers.MSG, chatHistory));
