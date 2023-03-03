@@ -13,6 +13,10 @@ public class User {
 
     public User(Socket localSocket) throws IOException {
         this.localSocket = localSocket;
+
+        /* Before we start to read from the ObjectInputStream from the client side
+         * we need to setup the ObjectOutputStream first from the server side.
+         * Otherwise, client side will block when it tries to construct the ObjectInputStream */
         objectOutputStream = new ObjectOutputStream(localSocket.getOutputStream());
         objectOutputStream.flush();
     }
@@ -26,10 +30,8 @@ public class User {
     }
 
     public ObjectInputStream getObjectInputStream() throws IOException {
-//        if (objectInputStream == null){
-//            objectInputStream = new ObjectInputStream(localSocket.getInputStream());
-//        }
-//        return objectInputStream;
+
+        /* Let's return a single instance of objectInputStream every time */
         return objectInputStream != null ? objectInputStream :
                 (objectInputStream = new ObjectInputStream(localSocket.getInputStream()));
     }

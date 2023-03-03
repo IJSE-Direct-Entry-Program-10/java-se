@@ -1,0 +1,49 @@
+.root {
+    -fx-base: #2b2c31;
+    -fx-control-inner-background: #313238;
+    -fx-control-inner-background-alt: -fx-control-inner-background ;
+    -fx-accent: #e7eff7 ;
+    -fx-default-button: #7f878f ;
+    -fx-focus-color: #3c3f41;
+    -fx-faint-focus-color: #3c3f41;
+    -fx-font-family: "Ubuntu";
+    -fx-font-size: 16px;
+}
+
+.text-input:focused {
+    -fx-highlight-fill: #000f6b;
+    -fx-highlight-text-fill: #e7eff7;
+}
+
+.increment-arrow, .decrement-arrow {
+    -fx-background-color: #808181;
+}
+
+.list-view {
+    -fx-border-color: #3c3f41;
+}
+
+.list-view .list-cell {
+    -fx-alignment: center;
+}
+
+.list-view .list-cell:focused {
+    -fx-background-color: none;
+    -fx-text-fill: #e7eff7;
+}
+
+.list-view .list-cell:filled:hover {
+    -fx-background-color: rgba(140, 140, 140, 0.21);
+}
+
+.text-field {
+    -fx-prompt-text-fill: #7f878f;
+}
+
+#imgSend {
+    -fx-cursor: hand;
+}
+
+#imgSend:hover {
+    -fx-opacity: 0.8;
+}

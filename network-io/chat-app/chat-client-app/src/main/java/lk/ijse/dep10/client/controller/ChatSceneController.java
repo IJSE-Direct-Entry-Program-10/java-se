@@ -2,10 +2,11 @@ package lk.ijse.dep10.client.controller;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.util.Callback;
 import lk.ijse.dep10.shared.Dep10Headers;
 import lk.ijse.dep10.shared.Dep10Message;
 
@@ -22,13 +23,34 @@ public class ChatSceneController {
     public TextField txtMsg;
     public TextArea txtChatHistory;
     private Socket socket;
-    private ObjectOutputStream oos;
-    private ObjectInputStream ois;
+    private ObjectOutputStream oos;         /* Socket's object output stream */
+    private ObjectInputStream ois;          /* Socket's object input stream*/
 
     public void initialize() {
         connect();
         readServerResponses();
-        Platform.runLater(()->closeSocketOnStageCloseRequest());
+        Platform.runLater(() -> closeSocketOnStageCloseRequest());
+
+        /* Customize the default cell factory for the list view to display a circle with the text */
+        lstUsers.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> stringListView) {
+                return new ListCell<>() {
+                    @Override
+                    protected void updateItem(String text, boolean empty) {
+                        super.updateItem(text, empty);
+                        if (!empty) {
+                            setGraphic(new Circle(5, Color.LIMEGREEN));
+                            setGraphicTextGap(7.5);
+                            setText(text);
+                        }else {
+                            setGraphic(null);
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
     }
 
     private void closeSocketOnStageCloseRequest() {
@@ -36,7 +58,7 @@ public class ChatSceneController {
             try {
                 oos.writeObject(new Dep10Message(Dep10Headers.EXIT, null));
                 oos.flush();
-                if (socket.isConnected()) socket.close();
+                if (!socket.isClosed()) socket.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -44,35 +66,45 @@ public class ChatSceneController {
     }
 
     private void readServerResponses() {
-        new Thread(()-> {
+        new Thread(() -> {
             try {
                 ois = new ObjectInputStream(socket.getInputStream());
 
-                while (true){
+                while (true) {
                     Dep10Message msg = (Dep10Message) ois.readObject();
-                    if (msg.getHeader() == Dep10Headers.USERS){
+                    if (msg.getHeader() == Dep10Headers.USERS) {
                         ArrayList<String> ipAddressList = (ArrayList<String>) msg.getBody();
-                        Platform.runLater(()->{
+                        Platform.runLater(() -> {
                             lstUsers.getItems().clear();
                             lstUsers.getItems().addAll(ipAddressList);
                         });
-                    }else if (msg.getHeader() == Dep10Headers.MSG) {
-                        Platform.runLater(()->txtChatHistory.setText(msg.getBody().toString()));
+                    } else if (msg.getHeader() == Dep10Headers.MSG) {
+                        Platform.runLater(() -> {
+                            txtChatHistory.setText(msg.getBody().toString());
+                            txtChatHistory.setScrollTop(Double.MAX_VALUE);
+                        });
                     }
                 }
             } catch (Exception e) {
-                if (socket.isClosed() || e instanceof EOFException) {
-                    Platform.exit();
-                    return;
+                if (e instanceof EOFException) {
+                    Platform.runLater(() -> {
+                        new Alert(Alert.AlertType.ERROR, "Connection lost, try again!").showAndWait();
+                        Platform.exit();
+                    });
+                } else if (!socket.isClosed()) {
+                    e.printStackTrace();
                 }
-                e.printStackTrace();
             }
         }).start();
     }
 
-    private void connect(){
+    private void connect() {
         try {
             socket = new Socket("127.0.0.1", 5050);
+
+            /* Before we start to read from the ObjectInputStream from the server side
+             * we need to setup the ObjectOutputStream first from the client side too
+             * Otherwise, server side will block when it tries to construct the ObjectInputStream */
             oos = new ObjectOutputStream(socket.getOutputStream());
             oos.flush();
         } catch (IOException e) {
@@ -94,4 +126,7 @@ public class ChatSceneController {
         }
     }
 
+    public void imgSendOnMouseClicked(MouseEvent mouseEvent) {
+        txtMsg.fireEvent(new ActionEvent());
+    }
 }

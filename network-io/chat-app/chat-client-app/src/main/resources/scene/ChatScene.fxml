@@ -3,12 +3,19 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="419.0" prefWidth="676.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.client.controller.ChatSceneController">
+<AnchorPane prefHeight="419.0" prefWidth="676.0" stylesheets="@../css/ChatSceneStyles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.client.controller.ChatSceneController">
    <children>
       <ListView fx:id="lstUsers" layoutX="452.0" layoutY="14.0" prefHeight="386.0" prefWidth="168.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
-      <TextField fx:id="txtMsg" layoutX="14.0" layoutY="365.0" onAction="#txtMsgOnAction" prefHeight="38.0" prefWidth="463.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="198.0" />
+      <TextField fx:id="txtMsg" layoutX="14.0" layoutY="365.0" onAction="#txtMsgOnAction" prefHeight="38.0" prefWidth="463.0" promptText="Message #General" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="198.0" />
       <TextArea fx:id="txtChatHistory" editable="false" layoutX="14.0" layoutY="15.0" prefHeight="339.0" prefWidth="463.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="198.0" AnchorPane.topAnchor="15.0" />
+      <ImageView fx:id="imgSend" onMouseClicked="#imgSendOnMouseClicked" fitHeight="23.0" fitWidth="23.0" layoutX="445.0" layoutY="373.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="23.0" AnchorPane.rightAnchor="208.0">
+         <image>
+            <Image url="@../icon/send.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
