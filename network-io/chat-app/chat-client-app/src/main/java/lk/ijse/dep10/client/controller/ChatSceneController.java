@@ -72,8 +72,9 @@ public class ChatSceneController {
 
     private void connect(){
         try {
-            socket = new Socket("192.168.1.100", 5050);
+            socket = new Socket("127.0.0.1", 5050);
             oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to connect to the server").showAndWait();

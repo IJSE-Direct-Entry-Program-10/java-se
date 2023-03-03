@@ -1,4 +1,4 @@
-package lk.ijse.dep10.server;
+package lk.ijse.dep10.server.model;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

@@ -1,5 +1,6 @@
 package lk.ijse.dep10.server;
 
+import lk.ijse.dep10.server.model.User;
 import lk.ijse.dep10.shared.Dep10Headers;
 import lk.ijse.dep10.shared.Dep10Message;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 
 public class ServerAppInitializer {
 
-    private static final ArrayList<User> userList = new ArrayList<>();
+    private static volatile ArrayList<User> userList = new ArrayList<>();
     private static volatile String chatHistory = "";
 
     public static void main(String[] args) throws IOException {
