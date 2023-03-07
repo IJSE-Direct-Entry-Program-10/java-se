@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="299.0" prefWidth="331.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.app.controller.MainSceneController">
+   <children>
+      <ComboBox fx:id="cmbType" layoutX="14.0" layoutY="24.0" onAction="#cmbTypeOnAction" prefHeight="24.0" prefWidth="299.0" promptText="Selecte the type" style="-fx-font-size: 16px;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="20.0" />
+      <Label fx:id="lblRate" alignment="CENTER" layoutX="14.0" layoutY="65.0" prefHeight="16.0" prefWidth="299.0" text="Select a type to display the rate" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dtpIn" layoutX="6.0" layoutY="106.0" onAction="#dtpInOnAction" prefHeight="24.0" prefWidth="299.0" promptText="Select In Date" style="-fx-font-size: 16px;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+      <DatePicker fx:id="dtpOut" layoutX="14.0" layoutY="150.0" onAction="#dtpOutOnAction" prefHeight="24.0" prefWidth="299.0" promptText="Select Out Date" style="-fx-font-size: 16px;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+      <Label fx:id="lblHint" alignment="CENTER" layoutX="101.0" layoutY="192.0" text="Select In and Out Dates" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTotal" alignment="CENTER" layoutX="130.0" layoutY="238.0" prefHeight="45.0" prefWidth="301.0" text="Total: -" textFill="#430eee" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font name="Ubuntu Bold" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
