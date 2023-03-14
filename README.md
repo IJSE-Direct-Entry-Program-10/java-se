@@ -9,6 +9,7 @@ A collection of projects to explore the most important areas of the Java SE libr
 - [Network I/O](/network-io/)
 - [Date and Time](/date-time/)
 - [Regular Expressions](/regular-expressions/)
+- [Java Database Connectivity](/jdbc/)
 
 ### License
 Copyright 2023 DEP. All Rights Reserved.
