@@ -2,4 +2,5 @@
 **/out/
 **/*.iml
 **/target
+jdbc/jdbc-assignment
 
