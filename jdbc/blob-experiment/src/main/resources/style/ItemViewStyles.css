@@ -1,0 +1,59 @@
+.root {
+    -fx-font-family: Ubuntu;
+    -fx-font-size: 14px;
+}
+
+#root {
+    -fx-background-color: white;
+}
+
+.heading {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+#btnNewItem {
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+
+#btnNewItem:hover {
+    -fx-background-color: rgba(0, 128, 0, 0.9);
+}
+
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: lightgray;
+    -fx-prompt-text-fill: gray;
+}
+
+.text-field:focused {
+    -fx-border-color: #019de0;
+    -fx-prompt-text-fill: #019de0;
+}
+
+#btnSaveItem {
+    -fx-background-color: #006a96;
+    -fx-text-fill: white;
+}
+
+#btnSaveItem:hover {
+    -fx-background-color: rgba(0, 106, 150, 0.9);
+}
+
+#btnDeleteItem {
+    -fx-background-color: #790000;
+    -fx-text-fill: white;
+}
+
+#btnDeleteItem:hover {
+    -fx-background-color: rgba(121, 0, 0, 0.9);
+}
+
+#btnImage {
+    -fx-background-color: lightgray;
+}
+
+#btnImage:hover {
+    -fx-background-color: rgba(211, 211, 211, 0.9);
+}
