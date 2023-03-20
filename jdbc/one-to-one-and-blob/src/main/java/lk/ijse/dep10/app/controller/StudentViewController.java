@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import lk.ijse.dep10.app.db.DBConnection;
@@ -21,6 +22,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.sql.*;
 
@@ -53,9 +55,11 @@ public class StudentViewController {
             txtAddress.setText(current.getAddress());
             Blob picture = current.getPicture();
 
-            if (picture != null) {
+            if (picture != null){
+                /* Blob -> JavaFX Image */
                 try {
-                    Image image = new Image(picture.getBinaryStream());
+                    InputStream is = picture.getBinaryStream();
+                    Image image = new Image(is);
                     imgPicture.setImage(image);
                     btnClear.setDisable(false);
                 } catch (SQLException e) {
@@ -81,21 +85,18 @@ public class StudentViewController {
                 int id = rst.getInt("id");
                 String name = rst.getString("name");
                 String address = rst.getString("address");
-                Blob picture = null;
+                Student student = new Student(id, name, address, null);
 
                 stm2.setInt(1, id);
                 ResultSet rstPicture = stm2.executeQuery();
                 if (rstPicture.next()){
-                    picture = rstPicture.getBlob("picture");
+                    Blob picture = rstPicture.getBlob("picture");
+                    student.setPicture(picture);
                 }
-
-                Student student = new Student(id, name, address, picture);
                 tblStudents.getItems().add(student);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load students, try again").showAndWait();
-            System.exit(1);
+            throw new RuntimeException(e);
         }
     }
 
@@ -120,7 +121,38 @@ public class StudentViewController {
 
     
     public void btnDeleteOnAction(ActionEvent event) {
+        Student selectedStudent = tblStudents.getSelectionModel().getSelectedItem();
+        Connection connection = DBConnection.getInstance().getConnection();
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement stmPicture = connection
+                    .prepareStatement("DELETE FROM Profile_Picture WHERE student_id = ?");
+            PreparedStatement stmStudent = connection
+                    .prepareStatement("DELETE FROM Student WHERE id = ?");
 
+            stmPicture.setInt(1, selectedStudent.getId());
+            stmPicture.executeUpdate();
+            stmStudent.setInt(1, selectedStudent.getId());
+            stmStudent.executeUpdate();
+
+            connection.commit();
+            tblStudents.getItems().remove(selectedStudent);
+            if (tblStudents.getItems().isEmpty()) btnNewStudent.fire();
+        } catch (Throwable e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to delete the student").show();
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     
@@ -140,43 +172,38 @@ public class StudentViewController {
         Connection connection = DBConnection.getInstance().getConnection();
         try {
             connection.setAutoCommit(false);
-            PreparedStatement stm = connection.
-                    prepareStatement("INSERT INTO Student (name, address) VALUES (?, ?)",
-                    Statement.RETURN_GENERATED_KEYS);
-            stm.setString(1, txtName.getText());
-            stm.setString(2, txtAddress.getText());
-            stm.executeUpdate();
+            PreparedStatement stmStudent = connection
+                    .prepareStatement("INSERT INTO Student (name, address) VALUES (?, ?)",
+                            Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stmPicture = connection.
+                    prepareStatement("INSERT INTO Profile_Picture (student_id, picture) VALUES (?, ?)");
 
-            ResultSet generatedKeys = stm.getGeneratedKeys();
+            stmStudent.setString(1, txtName.getText());
+            stmStudent.setString(2, txtAddress.getText());
+            stmStudent.executeUpdate();
+
+            ResultSet generatedKeys = stmStudent.getGeneratedKeys();
             generatedKeys.next();
             int id = generatedKeys.getInt(1);
-            Student newStudent = new Student(id,
-                    txtName.getText(), txtAddress.getText(), null);
+            Blob picture = null;
 
             if (!btnClear.isDisable()){
-                PreparedStatement stm2 = connection.prepareStatement
-                        ("INSERT INTO Profile_Picture (student_id, picture) VALUES (?, ?)");
-                stm2.setInt(1, id);
-                // javafx.image => byte[] <-> Blob
-                Image image = imgPicture.getImage();    // I have a javafx.image here
+                /* Java FX Image -> Byte[] <=> Blob */
+                Image fxImage = imgPicture.getImage();
+                BufferedImage image = SwingFXUtils.fromFXImage(fxImage, null);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(image, "png", baos);
+                byte[] bytes = baos.toByteArray();
+                picture = new SerialBlob(bytes);
 
-                /* 1. Convert JavaFX Image to a BufferedImage */
-                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
-
-                /* 2. Create a BAOS to store bytes of the BufferedImage */
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
-                /* 3. Let's store all the bytes of the BufferedImage in the BAOS */
-                ImageIO.write(bufferedImage, "png", bos);
-
-                byte[] bytes = bos.toByteArray();
-                Blob picture = new SerialBlob(bytes);
-                stm2.setBlob(2, picture);
-                stm2.executeUpdate();
-                newStudent.setPicture(picture);
+                stmPicture.setInt(1, id);
+                stmPicture.setBlob(2, picture);
+                stmPicture.executeUpdate();
             }
+
             connection.commit();
-            tblStudents.getItems().add(newStudent);
+            Student student = new Student(id, txtName.getText(), txtAddress.getText(), picture);
+            tblStudents.getItems().add(student);
             btnNewStudent.fire();
         } catch (Throwable e) {
             try {
@@ -217,7 +244,7 @@ public class StudentViewController {
 
     
     public void tblStudentsOnKeyReleased(KeyEvent event) {
-
+        if (event.getCode() == KeyCode.DELETE) btnDelete.fire();
     }
 
 }
