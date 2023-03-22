@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane prefHeight="293.0" prefWidth="292.0" style="-fx-font-family: Ubuntu; -fx-font-size: 16px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.client.controller.ClientViewController">
+   <children>
+      <Label alignment="CENTER" layoutX="15.0" layoutY="14.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Client B" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+      <VBox alignment="CENTER" layoutX="73.0" layoutY="48.0" prefHeight="228.0" prefWidth="262.0" spacing="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <children>
+            <Button fx:id="btnStartTransaction" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnStartTransactionOnAction" text="Start Transaction" VBox.vgrow="ALWAYS" />
+            <Button fx:id="btnUpdateValue" layoutX="68.0" layoutY="37.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnUpdateValueOnAction" text="Update Value" VBox.vgrow="ALWAYS" />
+            <Button fx:id="btnAddNewRecords" layoutX="10.0" layoutY="56.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnAddNewRecordsOnAction" text="Add New Records" VBox.vgrow="ALWAYS" />
+            <Button fx:id="btnCommit" layoutX="10.0" layoutY="110.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnCommitOnAction" text="Commit the Transaction" VBox.vgrow="ALWAYS" />
+            <Button fx:id="btnRollback" layoutX="10.0" layoutY="127.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnRollbackOnAction" text="Rollback the Transaction" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
